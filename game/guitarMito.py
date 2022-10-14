@@ -28,13 +28,13 @@ screen = pygame.display.set_mode((800, 600))
 background = pygame.image.load('./Assets/background.jpg')
 
 # Criando teclas
-keysOrder = ['blue', 'yellow', 'red', 'green', 'blue', 'yellow', 'yellow', 'blue', 'red', 'green', 'red', 'blue']
+keysOrder = ['blue', 'yellow', 'red', 'green', 'blue', 'yellow', 'yellow', 'blue', 'red', 'green', 'red', 'yellow', 'red', 'blue']
 keys = {'green': 'a', 'red': 's', 'blue': 'd', 'yellow': 'f'}
 initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
 xChange = {'green': -0.05, 'red': -0.02, 'blue': 0.01, 'yellow': 0.05}
 noteColors = {'green': './Assets/green-button.png', 'red': './Assets/red-button.png', 'blue': './Assets/blue-button.png', 'yellow': './Assets/yellow-button.png'}
 pressedNoteColors = {'green': './Assets/green-up.png', 'red': './Assets/red-up.png', 'blue': './Assets/blue-up.png', 'yellow': './Assets/yellow-up.png'}
-noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -780, -810]
+noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -780, -810, -820, -850]
 
 # Criando Notas
 noteImg = []
@@ -45,7 +45,7 @@ noteX_change = []
 noteY_change = []
 note_pressable = []
 note_key = []
-number_notes = 11
+number_notes = 14
 rows = []
 
 cont = 0
