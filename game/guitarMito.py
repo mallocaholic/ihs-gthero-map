@@ -35,7 +35,7 @@ initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
 xChange = {'green': -0.05, 'red': -0.02, 'blue': 0.01, 'yellow': 0.05}
 noteColors = {'green': './Assets/green-button.png', 'red': './Assets/red-button.png', 'blue': './Assets/blue-button.png', 'yellow': './Assets/yellow-button.png'}
 pressedNoteColors = {'green': './Assets/green-up.png', 'red': './Assets/red-up.png', 'blue': './Assets/blue-up.png', 'yellow': './Assets/yellow-up.png'}
-noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -810, -820, -850, -880, -950, -1000, -1050, -1100, -1120]
+noteTime = [70, 20, -30, -60, -140, -530, -580, -620, -700, -900, -960, -970, -1000, -1030, -1100, -1150, -1200, -1250, -1270]
 
 # Criando Notas
 noteImg = []
