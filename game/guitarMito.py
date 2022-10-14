@@ -10,9 +10,11 @@ def notePress(button):
                 noteY_change[i] = 0
                 noteY[i] = 520
                 noteX_change[i] = 0
+                plot[i] = False
 
 def plotNote(x, y, i):
-    screen.blit(noteImg[i], (x, y))
+    if plot[i]:
+        screen.blit(noteImg[i], (x, y))
 
 
 # Iniciando o Pygame
@@ -21,20 +23,19 @@ pygame.display.set_caption('Guitar Mito')
 
 # Musica de fundo
 mixer.music.load('./Assets/Better Call Saul Intro.mp3')
-mixer.music.play()
 
 # Criando a tela
 screen = pygame.display.set_mode((800, 600))
 background = pygame.image.load('./Assets/background.jpg')
 
 # Criando teclas
-keysOrder = ['blue', 'yellow', 'red', 'green', 'blue', 'yellow', 'yellow', 'blue', 'red', 'green', 'red', 'yellow', 'red', 'blue']
+keysOrder = ['blue', 'yellow', 'red', 'green', 'blue', 'yellow', 'yellow', 'blue', 'red', 'green', 'yellow', 'red', 'blue', 'green', 'green', 'yellow', 'blue', 'red', 'green']
 keys = {'green': 'a', 'red': 's', 'blue': 'd', 'yellow': 'f'}
 initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
 xChange = {'green': -0.05, 'red': -0.02, 'blue': 0.01, 'yellow': 0.05}
 noteColors = {'green': './Assets/green-button.png', 'red': './Assets/red-button.png', 'blue': './Assets/blue-button.png', 'yellow': './Assets/yellow-button.png'}
 pressedNoteColors = {'green': './Assets/green-up.png', 'red': './Assets/red-up.png', 'blue': './Assets/blue-up.png', 'yellow': './Assets/yellow-up.png'}
-noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -780, -810, -820, -850]
+noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -810, -820, -850, -880, -950, -1000, -1050, -1100, -1120]
 
 # Criando Notas
 noteImg = []
@@ -45,8 +46,9 @@ noteX_change = []
 noteY_change = []
 note_pressable = []
 note_key = []
-number_notes = 14
+number_notes = 19
 rows = []
+plot = []
 
 cont = 0
 for i in range(number_notes):
@@ -58,8 +60,10 @@ for i in range(number_notes):
     noteY_change.append(0.15)
     note_pressable.append(False)
     note_key.append(keys[keysOrder[i]])
+    plot.append(True)
 
 running = True
+mixer.music.play()
 while running:
     screen.fill((0, 5, 20))
 
@@ -91,8 +95,6 @@ while running:
                 note_pressable[i] = True
 
             if noteY[i] > 540:
-                #noteY[i] = 230
-                #noteX[i] = noteX0[i]
                 note_pressable[i] = False
 
             plotNote(noteX[i], noteY[i], i)
