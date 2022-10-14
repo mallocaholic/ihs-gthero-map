@@ -6,7 +6,7 @@ def notePress(button):
     for i in range(number_notes):
         if note_pressable[i]:
             if note_key[i] == button:
-                noteImg[i] = pygame.image.load(pressedNoteColors[i % 4])
+                noteImg[i] = pygame.image.load(pressedNoteColors[keysOrder[i]])
                 noteY_change[i] = 0
                 noteY[i] = 520
                 noteX_change[i] = 0
@@ -28,12 +28,13 @@ screen = pygame.display.set_mode((800, 600))
 background = pygame.image.load('./Assets/background.jpg')
 
 # Criando teclas
-keysOrder = ['blue', '']
-keys = ['a', 's', 'd', 'f']
-xChange = [-0.05, -0.02, 0.01, 0.05]
-noteColors = ['./Assets/green-button.png', './Assets/red-button.png', './Assets/blue-button.png', './Assets/yellow-button.png', './Assets/blue-button.png']
-pressedNoteColors = ['./Assets/green-up.png', './Assets/red-up.png', './Assets/blue-up.png', './Assets/yellow-up.png', './Assets/blue-up.png']
-noteTime = [-60, -40, 60, 10, -100]
+keysOrder = ['blue', 'yellow', 'red', 'green', 'blue', 'yellow', 'yellow', 'blue', 'red', 'green', 'red', 'blue']
+keys = {'green': 'a', 'red': 's', 'blue': 'd', 'yellow': 'f'}
+initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
+xChange = {'green': -0.05, 'red': -0.02, 'blue': 0.01, 'yellow': 0.05}
+noteColors = {'green': './Assets/green-button.png', 'red': './Assets/red-button.png', 'blue': './Assets/blue-button.png', 'yellow': './Assets/yellow-button.png'}
+pressedNoteColors = {'green': './Assets/green-up.png', 'red': './Assets/red-up.png', 'blue': './Assets/blue-up.png', 'yellow': './Assets/yellow-up.png'}
+noteTime = [70, 20, -30, -50, -100, -380, -430, -470, -550, -750, -780, -810]
 
 # Criando Notas
 noteImg = []
@@ -44,21 +45,19 @@ noteX_change = []
 noteY_change = []
 note_pressable = []
 note_key = []
-number_notes = 5
+number_notes = 11
 rows = []
 
 cont = 0
 for i in range(number_notes):
-    noteImg.append(pygame.image.load(noteColors[i]))
-    noteX.append(360 + cont)
-    noteX0.append(360 + cont)
+    noteImg.append(pygame.image.load(noteColors[keysOrder[i]]))
+    noteX.append(initialX[keysOrder[i]])
+    noteX0.append(keysOrder[i])
     noteY.append(noteTime[i])
-    noteX_change.append(xChange[i % 4])
+    noteX_change.append(xChange[keysOrder[i]])
     noteY_change.append(0.15)
     note_pressable.append(False)
-    note_key.append(keys[i % 4])
-    cont += 30
-    cont = cont % 400
+    note_key.append(keys[keysOrder[i]])
 
 running = True
 while running:
