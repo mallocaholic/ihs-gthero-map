@@ -1,5 +1,4 @@
-import pygame, sys
-import math
+import pygame
 from pygame import mixer
 
 ## Setando coisas
@@ -64,7 +63,7 @@ def initGame():
     #carregando a tela de jogo
     background = pygame.image.load('Assets/background.jpg')
 
-    vida = 100
+    vida = 3000
 
     # Musica
     mixer.music.load('Assets/Better_Call_Saul_Intro.mp3')
@@ -113,11 +112,15 @@ def initGame():
 
                     plotNote(noteX[i], noteY[i], i)
 
+                if mixer.music.get_busy() == False:
+                    return (3, 1)
+
         if running != 0:
             pygame.display.update()
 
         if vida <= 0:
             return (2, 1)
+
 
 #tela de quando vc perde
 def menuLost():
@@ -132,7 +135,8 @@ def menuLost():
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                return (0,0) 
+                if event.key == pygame.K_ESCAPE:
+                    return (0,0) 
 
 def mainMenu():
     background_menu = pygame.image.load('Assets/backbround_menu.png')
@@ -146,9 +150,20 @@ def mainMenu():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     return (1,1)
-                if event.key == pygame.K_e:
+                if event.key == pygame.K_ESCAPE:
                     return (0,0)
 
+def menuWin():
+    background_win = pygame.image.load('Assets/backbround_yourock.png')
+
+    while 1:
+        screen.blit(background_win, (0, 0))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return (0,0)
 
 
 
@@ -171,5 +186,7 @@ if __name__ == '__main__':
             state, running = initGame()
         elif state == 2:
             state, running = menuLost()
+        elif state == 3:
+            state, running = menuWin()
 
     pygame.quit()
