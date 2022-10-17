@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os, sys
+import os, sys, time
 from fcntl import ioctl
 
 # ioctl commands defined at the pci driver
@@ -20,20 +20,37 @@ def main():
     fd = os.open(sys.argv[1], os.O_RDWR)
 
     # data to write
-    data = 0x00000000;
+    data = 0xFFFFFFFF;
     ioctl(fd, WR_R_DISPLAY)
     retval = os.write(fd, data.to_bytes(4, 'little'))
     print("wrote %d bytes"%retval)
 
     # data to write
-    data = 0xFFFFFFFF;
+    data = 0x00000000;
     ioctl(fd, WR_L_DISPLAY)
     retval = os.write(fd, data.to_bytes(4, 'little'))
     print("wrote %d bytes"%retval)
 
+    # data to write
+    data = 0xFF0FFFFF;
+    ioctl(fd, WR_GREEN_LEDS)
+    retval = os.write(fd, data.to_bytes(4, 'little'))
+    print("wrote %d bytes"%retval)
+
+    # data to write
+    data = 0xFFF0FFFF;
+    ioctl(fd, WR_RED_LEDS)
+    retval = os.write(fd, data.to_bytes(4, 'little'))
+    print("wrote %d bytes"%retval)
+
+    # 
+    ioctl(fd, RD_SWITCHES)
+    switch = os.read(fd, 4);
+    print("0x%X"%int.from_bytes(switch, 'little'))
+    
     ioctl(fd, RD_PBUTTONS)
-    red = os.read(fd, 4); # read 4 bytes and store in red var
-    print("red 0x%X"%int.from_bytes(red, 'little'))
+    button = os.read(fd, 4);
+    print("0x%X"%int.from_bytes(button, 'little'))
 
     os.close(fd)
 

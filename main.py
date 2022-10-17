@@ -1,7 +1,17 @@
 import pygame
 from pygame import mixer
+import os, sys
+from fcntl import ioctl
+from time import sleep
 
 ## Setando coisas
+RD_SWITCHES   = 24929
+RD_PBUTTONS   = 24930
+WR_L_DISPLAY  = 24931
+WR_R_DISPLAY  = 24932
+WR_RED_LEDS   = 24933
+WR_GREEN_LEDS = 24934
+
 # Criando teclas
 keysOrder = ['green', 'red', 'blue', 'yellow', 'red', 'blue', 'green', 'red', 'blue', 'green', 'red', 'blue', 'yellow', 'green', 'red', 
  'green', 'red', 'blue', 'yellow', 'blue', 'green', 'red', 'blue', 'yellow', 'blue', 'yellow', 'blue', 'yellow',
@@ -10,7 +20,7 @@ keysOrder = ['green', 'red', 'blue', 'yellow', 'red', 'blue', 'green', 'red', 'b
 
 keys = {'green': 'a', 'red': 's', 'blue': 'd', 'yellow': 'f'}
 initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
-xChange = {'green': -0.05, 'red': -0.02, 'blue': 0.01, 'yellow': 0.05}
+xChange = {'green': -3.0, 'red': -1.2, 'blue': 0.6, 'yellow': 3.0}
 noteColors = {'green': 'Assets/green-button.png', 'red': 'Assets/red-button.png', 'blue': 'Assets/blue-button.png', 'yellow': 'Assets/yellow-button.png'}
 pressedNoteColors = {'green': 'Assets/green-up.png', 'red': 'Assets/red-up.png', 'blue': 'Assets/blue-up.png', 'yellow': 'Assets/yellow-up.png'}
 noteTime = [50, 50, 50, 50, 0, 0, -16, -32, -50, -100, -100, -100, -100, -116, -132, 
@@ -29,6 +39,16 @@ note_key = []
 number_notes = len(keysOrder)
 rows = []
 plot = []
+
+def toArray(red):
+    a = []
+    for i in range(4):
+        res = red & (1 << i)
+        if res:
+            a.append(0)         #0 nao foi pressionado
+        else:
+            a.append(1)         #1 foi pressionado
+    return a
 
 def notePress(button):
     for i in range(number_notes):
@@ -55,7 +75,7 @@ def initGame():
         noteX0.append(keysOrder[i])
         noteY.append(noteTime[i])
         noteX_change.append(xChange[keysOrder[i]])
-        noteY_change.append(0.15)
+        noteY_change.append(9)
         note_pressable.append(False)
         note_key.append(keys[keysOrder[i]])
         plot.append(True)
@@ -75,11 +95,17 @@ def initGame():
         # Imagem de fundo
         screen.blit(background, (0, 0))
 
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+
+        pressedButtons = toArray(red)
+        #print(pressedButtons)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = 0
 
-            # Teclado
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
                     notePress('a')
@@ -92,6 +118,21 @@ def initGame():
                 if event.key == pygame.K_t:
                     #indo para a tela 'perdeu'
                     return (2,1)
+
+        # Teclado
+        if(pressedButtons[0]):
+            print('1')
+            notePress('f')
+        if(pressedButtons[1]):
+            print('2')
+            notePress('d')
+        if(pressedButtons[2]):
+            print('3')
+            notePress('s')
+        if(pressedButtons[3]):
+            print('4')
+            notePress('a')
+
 
         if running:
             for i in range(number_notes):
@@ -112,10 +153,12 @@ def initGame():
 
                     plotNote(noteX[i], noteY[i], i)
 
-                if mixer.music.get_busy() == False:
+               # if mixer.music.get_busy() == False:
+                if i == number_notes - 1 and noteY[i] > 480:
                     return (3, 1)
 
         if running != 0:
+            sleep(0.15)
             pygame.display.update()
 
         if vida <= 0:
@@ -170,6 +213,14 @@ def menuWin():
 # Main
 if __name__ == '__main__':
     state = 0
+
+    if len(sys.argv) < 2:
+        print("Error: expected more command line arguments")
+        print("Syntax: %s </dev/device_file>"%sys.argv[0])
+        exit(1)
+
+    fd = os.open(sys.argv[1], os.O_RDWR)
+
 
     #carregando a tela
     res = (800, 600)
