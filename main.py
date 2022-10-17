@@ -137,9 +137,7 @@ def initGame():
         ioctl(fd, RD_PBUTTONS)
         red = os.read(fd, 4); # read 4 bytes and store in red var
         red = int.from_bytes(red, 'little')
-
         pressedButtons = toArray(red)
-        #print(pressedButtons)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -161,19 +159,19 @@ def initGame():
         # Teclado
         if(pressedButtons[0]):
             if notePress('f'):
-                score = score + 1
+                score = score + 8
                 updateScore(score)
         if(pressedButtons[1]):
             if notePress('d'):
-                score = score + 1
+                score = score + 8
                 updateScore(score)
         if(pressedButtons[2]):
             if notePress('s'):
-                score = score + 1
+                score = score + 9
                 updateScore(score)
         if(pressedButtons[3]):
             if notePress('a'):
-                score = score + 1
+                score = score + 11
                 updateScore(score)
         
         # print(score)
@@ -224,6 +222,15 @@ def menuLost():
         pygame.display.update()
         screen.blit(background_perdeu, (0, 0))
 
+        time.sleep(1)
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (0,0)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -237,6 +244,14 @@ def mainMenu():
         screen.blit(background_menu, (0, 0))
         pygame.display.update()
 
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (1,1)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -246,11 +261,23 @@ def mainMenu():
 
 def menuWin(score):
     background_win = pygame.image.load('Assets/backbround_yourock.png')
+    mixer.music.unload()
+    urnaSound = mixer.music.load('./confirma-urna.mp3')
+    mixer.music.play()
 
     while 1:
         screen.blit(background_win, (0, 0))
         pygame.display.update()
         piscar(score)
+
+        time.sleep(1)
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (0,0)
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -291,5 +318,6 @@ if __name__ == '__main__':
         elif state == 3:
             state, running = menuWin(score)
 
+    mixer.music.unload()
     os.close(fd)
     pygame.quit()
