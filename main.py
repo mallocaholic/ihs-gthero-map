@@ -40,6 +40,30 @@ number_notes = len(keysOrder)
 rows = []
 plot = []
 
+mapping = {'0': '40', '1': '79', '2': '24', '3': '30', '4': '19', '5': '12', '6': '02', '7': '78', '8': '00', '9': '10', 'F': 'FF'}
+
+def updateScore(val):
+
+    val_str = str(val)
+    str_emp = ""
+
+    for number in val_str:
+        str_emp += mapping[number] 
+
+    while(len(str_emp) < 8):
+        str_emp = mapping['0'] + str_emp
+
+    data = int(str_emp, 16)
+    ioctl(fd, WR_R_DISPLAY)
+    retval = os.write(fd, data.to_bytes(4, 'little'))
+    #print("wrote %d bytes"%retval)
+
+def piscar(score):
+    updateScore('FFFF')
+    sleep(0.5)
+    updateScore(score)
+    sleep(0.5)
+
 def toArray(red):
     a = []
     for i in range(4):
@@ -51,6 +75,7 @@ def toArray(red):
     return a
 
 def notePress(button):
+    ret_val = 0
     for i in range(number_notes):
         if note_pressable[i]:
             if note_key[i] == button:
@@ -59,6 +84,10 @@ def notePress(button):
                 noteY[i] = 520
                 noteX_change[i] = 0
                 plot[i] = False
+                ret_val = 1
+                note_pressable[i] = False
+
+    return ret_val
 
 def plotNote(x, y, i):
     if plot[i]:
@@ -67,7 +96,8 @@ def plotNote(x, y, i):
 #função para iniciar o jogo:
 def initGame(): 
     running = 1
-    
+    score = 0
+    updateScore(score)
     #criando as notas
     for i in range(number_notes):
         noteImg.append(pygame.image.load(noteColors[keysOrder[i]]))
@@ -115,24 +145,31 @@ def initGame():
                     notePress('d')
                 if event.key == pygame.K_f:
                     notePress('f')
-                if event.key == pygame.K_t:
+                if event.key == pygame.K_p:
                     #indo para a tela 'perdeu'
-                    return (2,1)
+                    return (2,1, score)
 
         # Teclado
         if(pressedButtons[0]):
-            print('1')
-            notePress('f')
+            if notePress('f'):
+                score = score + 1
+                updateScore(score)
         if(pressedButtons[1]):
-            print('2')
-            notePress('d')
+            if notePress('d'):
+                score = score + 1
+                updateScore(score)
         if(pressedButtons[2]):
-            print('3')
-            notePress('s')
+            if notePress('s'):
+                score = score + 1
+                updateScore(score)
         if(pressedButtons[3]):
-            print('4')
-            notePress('a')
-
+            if notePress('a'):
+                score = score + 1
+                updateScore(score)
+        
+        print(score)
+        updateScore(score)
+        updateScore(score)
 
         if running:
             for i in range(number_notes):
@@ -155,14 +192,14 @@ def initGame():
 
                # if mixer.music.get_busy() == False:
                 if i == number_notes - 1 and noteY[i] > 480:
-                    return (3, 1)
+                    return (3, 1, score)
 
         if running != 0:
             sleep(0.15)
             pygame.display.update()
 
         if vida <= 0:
-            return (2, 1)
+            return (2, 1, score)
 
 
 #tela de quando vc perde
@@ -196,12 +233,13 @@ def mainMenu():
                 if event.key == pygame.K_ESCAPE:
                     return (0,0)
 
-def menuWin():
+def menuWin(score):
     background_win = pygame.image.load('Assets/backbround_yourock.png')
 
     while 1:
         screen.blit(background_win, (0, 0))
         pygame.display.update()
+        piscar(score)
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -213,6 +251,7 @@ def menuWin():
 # Main
 if __name__ == '__main__':
     state = 0
+    score = 0
 
     if len(sys.argv) < 2:
         print("Error: expected more command line arguments")
@@ -220,6 +259,7 @@ if __name__ == '__main__':
         exit(1)
 
     fd = os.open(sys.argv[1], os.O_RDWR)
+    updateScore(0)
 
 
     #carregando a tela
@@ -234,10 +274,11 @@ if __name__ == '__main__':
         if state == 0:
             state, running = mainMenu()
         elif state == 1:
-            state, running = initGame()
+            state, running, score = initGame()
         elif state == 2:
             state, running = menuLost()
         elif state == 3:
-            state, running = menuWin()
+            state, running = menuWin(score)
 
+    os.close(fd)
     pygame.quit()
