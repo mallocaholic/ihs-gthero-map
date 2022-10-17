@@ -2,7 +2,7 @@ import pygame
 from pygame import mixer
 import os, sys
 from fcntl import ioctl
-from time import sleep
+import time
 
 ## Setando coisas
 RD_SWITCHES   = 24929
@@ -20,7 +20,7 @@ keysOrder = ['green', 'red', 'blue', 'yellow', 'red', 'blue', 'green', 'red', 'b
 
 keys = {'green': 'a', 'red': 's', 'blue': 'd', 'yellow': 'f'}
 initialX = {'green': 360, 'red': 390, 'blue': 420, 'yellow': 450}
-xChange = {'green': -3.0, 'red': -1.2, 'blue': 0.6, 'yellow': 3.0}
+xChange = {'green': -4.0, 'red': -1.6, 'blue': 0.8, 'yellow': 4.0}
 noteColors = {'green': 'Assets/green-button.png', 'red': 'Assets/red-button.png', 'blue': 'Assets/blue-button.png', 'yellow': 'Assets/yellow-button.png'}
 pressedNoteColors = {'green': 'Assets/green-up.png', 'red': 'Assets/red-up.png', 'blue': 'Assets/blue-up.png', 'yellow': 'Assets/yellow-up.png'}
 noteTime = [50, 50, 50, 50, 0, 0, -16, -32, -50, -100, -100, -100, -100, -116, -132, 
@@ -60,9 +60,9 @@ def updateScore(val):
 
 def piscar(score):
     updateScore('FFFF')
-    sleep(0.5)
+    time.sleep(0.5)
     updateScore(score)
-    sleep(0.5)
+    time.sleep(0.5)
 
 def toArray(red):
     a = []
@@ -95,6 +95,8 @@ def plotNote(x, y, i):
 
 #função para iniciar o jogo:
 def initGame(): 
+    initialTime = time.time()
+    print(initialTime)
     running = 1
     score = 0
     updateScore(score)
@@ -105,7 +107,7 @@ def initGame():
         noteX0.append(keysOrder[i])
         noteY.append(noteTime[i])
         noteX_change.append(xChange[keysOrder[i]])
-        noteY_change.append(9)
+        noteY_change.append(12)
         note_pressable.append(False)
         note_key.append(keys[keysOrder[i]])
         plot.append(True)
@@ -113,14 +115,21 @@ def initGame():
     #carregando a tela de jogo
     background = pygame.image.load('Assets/background.jpg')
 
-    vida = 3000
+    vida = 75
 
     # Musica
     mixer.music.load('Assets/Better_Call_Saul_Intro.mp3')
-    mixer.music.play()
+    #mixer.music.play()
+    flagMusic = 0
     
     while 1:
         screen.fill((0, 5, 20))
+
+        currentTime = time.time()
+        if (currentTime - initialTime > 5) and not flagMusic:
+            mixer.music.play()
+            flagMusic = 1
+
 
         # Imagem de fundo
         screen.blit(background, (0, 0))
@@ -128,9 +137,7 @@ def initGame():
         ioctl(fd, RD_PBUTTONS)
         red = os.read(fd, 4); # read 4 bytes and store in red var
         red = int.from_bytes(red, 'little')
-
         pressedButtons = toArray(red)
-        #print(pressedButtons)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -152,22 +159,22 @@ def initGame():
         # Teclado
         if(pressedButtons[0]):
             if notePress('f'):
-                score = score + 1
+                score = score + 8
                 updateScore(score)
         if(pressedButtons[1]):
             if notePress('d'):
-                score = score + 1
+                score = score + 8
                 updateScore(score)
         if(pressedButtons[2]):
             if notePress('s'):
-                score = score + 1
+                score = score + 9
                 updateScore(score)
         if(pressedButtons[3]):
             if notePress('a'):
-                score = score + 1
+                score = score + 11
                 updateScore(score)
         
-        print(score)
+        # print(score)
         updateScore(score)
         updateScore(score)
 
@@ -192,10 +199,12 @@ def initGame():
 
                # if mixer.music.get_busy() == False:
                 if i == number_notes - 1 and noteY[i] > 480:
+                    initialTime = time.time()
+                    print(initialTime)
                     return (3, 1, score)
 
         if running != 0:
-            sleep(0.15)
+            time.sleep(0.15)
             pygame.display.update()
 
         if vida <= 0:
@@ -213,6 +222,15 @@ def menuLost():
         pygame.display.update()
         screen.blit(background_perdeu, (0, 0))
 
+        time.sleep(1)
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (0,0)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -226,6 +244,14 @@ def mainMenu():
         screen.blit(background_menu, (0, 0))
         pygame.display.update()
 
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (1,1)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -235,11 +261,23 @@ def mainMenu():
 
 def menuWin(score):
     background_win = pygame.image.load('Assets/backbround_yourock.png')
+    mixer.music.unload()
+    urnaSound = mixer.music.load('./confirma-urna.mp3')
+    mixer.music.play()
 
     while 1:
         screen.blit(background_win, (0, 0))
         pygame.display.update()
         piscar(score)
+
+        time.sleep(1)
+        ioctl(fd, RD_PBUTTONS)
+        red = os.read(fd, 4); # read 4 bytes and store in red var
+        red = int.from_bytes(red, 'little')
+        pressedButtons = toArray(red)
+
+        if pressedButtons[0] or pressedButtons[1] or pressedButtons[2] or pressedButtons[3]:
+            return (0,0)
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -280,5 +318,6 @@ if __name__ == '__main__':
         elif state == 3:
             state, running = menuWin(score)
 
+    mixer.music.unload()
     os.close(fd)
     pygame.quit()
