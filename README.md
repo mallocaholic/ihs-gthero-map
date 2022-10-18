@@ -6,7 +6,7 @@ O jogo se encontra no arquivo main.py para rodar basta, após o módulo ser carr
 python main.py /dev/mydev
 ```
 
-O projeto quartus se encontra na pasta mapeamento.
+O projeto quartus se encontra na pasta mapeamento e o driver na pasta driver/pci.
 
 
 ## Autores:
