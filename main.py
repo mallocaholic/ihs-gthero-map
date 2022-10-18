@@ -303,7 +303,7 @@ def mainMenu():
 def menuWin(score):
     background_win = pygame.image.load('Assets/backbround_yourock.png')
     mixer.music.unload()
-    urnaSound = mixer.music.load('./confirma-urna.mp3')
+    urnaSound = mixer.music.load('Assets/confirma-urna.mp3')
     mixer.music.play()
 
     while 1:
