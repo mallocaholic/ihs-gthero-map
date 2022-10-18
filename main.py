@@ -42,6 +42,24 @@ plot = []
 
 mapping = {'0': '40', '1': '79', '2': '24', '3': '30', '4': '19', '5': '12', '6': '02', '7': '78', '8': '00', '9': '10', 'F': 'FF'}
 
+def piscarHit(a):
+    currentTime = time.time()
+
+    state = ""
+
+    if currentTime - a[1] < 0.2:
+        state = "11111111" # Liga
+    else:
+        state = "00000000" # Desliga 
+        a = (0,.0)
+
+    
+    data = int(state, 2)
+    ioctl(fd, WR_GREEN_LEDS)
+    retval = os.write(fd, data.to_bytes(4, 'little'))
+
+    return a
+
 def updateScore(val):
 
     val_str = str(val)
@@ -57,12 +75,16 @@ def updateScore(val):
     ioctl(fd, WR_R_DISPLAY)
     retval = os.write(fd, data.to_bytes(4, 'little'))
     #print("wrote %d bytes"%retval)
+    
 
 def piscar(score):
+    time.sleep(0.2)
     updateScore('FFFF')
-    time.sleep(0.5)
+    updateScore('FFFF')
+    time.sleep(0.2)
     updateScore(score)
-    time.sleep(0.5)
+    time.sleep(0.2)
+    updateScore(score)
 
 def toArray(red):
     a = []
@@ -121,6 +143,9 @@ def initGame():
     mixer.music.load('Assets/Better_Call_Saul_Intro.mp3')
     #mixer.music.play()
     flagMusic = 0
+
+    # Note hits
+    nHit = (0,.0)
     
     while 1:
         screen.fill((0, 5, 20))
@@ -155,28 +180,43 @@ def initGame():
                 if event.key == pygame.K_p:
                     #indo para a tela 'perdeu'
                     return (2,1, score)
+                if event.key == pygame.K_g:
+                    #indo para a tela 'perdeu'
+                    return (3,1, score)
 
-        # Teclado
+
+        # Periféricos 
         if(pressedButtons[0]):
             if notePress('f'):
                 score = score + 8
                 updateScore(score)
+                nHit = (1,currentTime)
         if(pressedButtons[1]):
             if notePress('d'):
                 score = score + 8
                 updateScore(score)
+                nHit = (1,currentTime)
         if(pressedButtons[2]):
             if notePress('s'):
                 score = score + 9
                 updateScore(score)
+                nHit = (1,currentTime)
         if(pressedButtons[3]):
             if notePress('a'):
                 score = score + 11
                 updateScore(score)
+                nHit = (1,currentTime)
         
         # print(score)
         updateScore(score)
         updateScore(score)
+
+        #see if note was hit
+
+
+        nHit = piscarHit(nHit)
+
+
 
         if running:
             for i in range(number_notes):
@@ -222,7 +262,8 @@ def menuLost():
         pygame.display.update()
         screen.blit(background_perdeu, (0, 0))
 
-        time.sleep(1)
+        piscarHit((0,0))
+        time.sleep(0.5)
         ioctl(fd, RD_PBUTTONS)
         red = os.read(fd, 4); # read 4 bytes and store in red var
         red = int.from_bytes(red, 'little')
@@ -270,7 +311,6 @@ def menuWin(score):
         pygame.display.update()
         piscar(score)
 
-        time.sleep(1)
         ioctl(fd, RD_PBUTTONS)
         red = os.read(fd, 4); # read 4 bytes and store in red var
         red = int.from_bytes(red, 'little')
