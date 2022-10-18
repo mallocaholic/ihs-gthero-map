@@ -1,0 +1,140 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored --output-directory=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore --report-file=bsf:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\pcihellocore.bsf --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore.qsys
+Progress: Loading pcihello_restored/pcihellocore.qsys
+Progress: Reading input file
+Progress: Adding hexdisplay [altera_avalon_pio 14.0]
+Progress: Parameterizing module hexdisplay
+Progress: Adding inport [altera_avalon_pio 14.0]
+Progress: Parameterizing module inport
+Progress: Adding pcie_hard_ip_0 [altera_pcie_hard_ip 14.0]
+Progress: Parameterizing module pcie_hard_ip_0
+Progress: Adding hexdisplay2 [altera_avalon_pio 14.0]
+Progress: Parameterizing module hexdisplay2
+Progress: Adding ledgreen [altera_avalon_pio 14.0]
+Progress: Parameterizing module ledgreen
+Progress: Adding ledred [altera_avalon_pio 14.0]
+Progress: Parameterizing module ledred
+Progress: Adding buttons [altera_avalon_pio 14.0]
+Progress: Parameterizing module buttons
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: pcihellocore.pcihellocore: There are recommended upgrades for: pcie_hard_ip_0
+Warning: pcihellocore.pcihellocore: Module dependency loop involving: "pcie_hard_ip_0" (altera_pcie_hard_ip 14.0), "hexdisplay" (altera_avalon_pio 14.0)
+Info: pcihellocore.inport: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: pcihellocore.pcie_hard_ip_0:  Rx Master BAR 0 mapped to 16 -bit Avalon-MM address
+Warning: pcihellocore.pcie_hard_ip_0.pcie_hard_ip_0: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
+Warning: pcihellocore.pcie_hard_ip_0.pcie_hard_ip_0: Module dependency loop involving: "avalon_clk" (altera_clock_bridge 14.0), "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
+Info: pcihellocore.pcie_hard_ip_0.pcie_internal_hip:  Txs Address width is 15
+Info: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: Application clock frequency is 125 Mhz 
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_ack: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_num: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_req: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.test_out_export: Interface has no signals
+Info: pcihellocore.pcie_hard_ip_0.altgx_internal: Family: Cyclone IV GX
+Info: pcihellocore.pcie_hard_ip_0.altgx_internal: Lanes: 1
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.pcie_core_clk cannot be both connected and exported
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_ack must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.rc_rx_analogreset must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.rc_rx_digitalreset must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_num must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_req must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.msi_interface_export must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.tx_deemph_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.tx_margin_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.test_out_export must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.pll_powerdown_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.rateswitch_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.rateswitchbaseclock_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_2 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_3 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_4 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_5 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_6 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_7 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_8 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_9 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.reset_controller_internal: reset_controller_internal.reset_n_out cannot be both connected and exported
+Info: pcihellocore.buttons: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.test_in must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.clocks_sim must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_busy must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.pipe_ext must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_togxb must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_fromgxb_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: Interrupt sender pcie_hard_ip_0.cra_irq is not connected to an interrupt receiver
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored --output-directory=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\synthesis --file-set=QUARTUS_SYNTH --report-file=html:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\pcihellocore.html --report-file=sopcinfo:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore.sopcinfo --report-file=cmp:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\pcihellocore.cmp --report-file=qip:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\synthesis\pcihellocore.qip --report-file=svd:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\synthesis\pcihellocore.svd --report-file=regmap:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\synthesis\pcihellocore.regmap --report-file=xml:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\pcihellocore.xml --report-file=debuginfo:D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore\synthesis\pcihellocore.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=D:\Users\jmbj2\Downloads\mapeamento-vaidarerrado\mapeamento\pcihello_restored\pcihellocore.qsys --language=VERILOG
+Progress: Loading pcihello_restored/pcihellocore.qsys
+Progress: Reading input file
+Progress: Adding hexdisplay [altera_avalon_pio 14.0]
+Progress: Parameterizing module hexdisplay
+Progress: Adding inport [altera_avalon_pio 14.0]
+Progress: Parameterizing module inport
+Progress: Adding pcie_hard_ip_0 [altera_pcie_hard_ip 14.0]
+Progress: Parameterizing module pcie_hard_ip_0
+Progress: Adding hexdisplay2 [altera_avalon_pio 14.0]
+Progress: Parameterizing module hexdisplay2
+Progress: Adding ledgreen [altera_avalon_pio 14.0]
+Progress: Parameterizing module ledgreen
+Progress: Adding ledred [altera_avalon_pio 14.0]
+Progress: Parameterizing module ledred
+Progress: Adding buttons [altera_avalon_pio 14.0]
+Progress: Parameterizing module buttons
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: pcihellocore.pcihellocore: There are recommended upgrades for: pcie_hard_ip_0
+Warning: pcihellocore.pcihellocore: Module dependency loop involving: "hexdisplay" (altera_avalon_pio 14.0), "pcie_hard_ip_0" (altera_pcie_hard_ip 14.0)
+Info: pcihellocore.inport: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: pcihellocore.pcie_hard_ip_0:  Rx Master BAR 0 mapped to 16 -bit Avalon-MM address
+Warning: pcihellocore.pcie_hard_ip_0.pcie_hard_ip_0: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
+Warning: pcihellocore.pcie_hard_ip_0.pcie_hard_ip_0: Module dependency loop involving: "avalon_clk" (altera_clock_bridge 14.0), "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
+Info: pcihellocore.pcie_hard_ip_0.pcie_internal_hip:  Txs Address width is 15
+Info: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: Application clock frequency is 125 Mhz 
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_ack: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_num: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.app_msi_req: Interface has no signals
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip.test_out_export: Interface has no signals
+Info: pcihellocore.pcie_hard_ip_0.altgx_internal: Family: Cyclone IV GX
+Info: pcihellocore.pcie_hard_ip_0.altgx_internal: Lanes: 1
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.pcie_core_clk cannot be both connected and exported
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_ack must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.rc_rx_analogreset must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.rc_rx_digitalreset must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_num must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.app_msi_req must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.msi_interface_export must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.tx_deemph_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.tx_margin_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pcie_internal_hip: pcie_internal_hip.test_out_export must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.pll_powerdown_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.rateswitch_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.pipe_interface_internal: pipe_interface_internal.rateswitchbaseclock_pcs must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_2 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_3 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_4 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_5 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_6 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_7 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_8 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.refclk_conduit: refclk_conduit.conduit_out_9 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0.reset_controller_internal: reset_controller_internal.reset_n_out cannot be both connected and exported
+Info: pcihellocore.buttons: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.test_in must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.clocks_sim must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_busy must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.pipe_ext must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_togxb must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: pcie_hard_ip_0.reconfig_fromgxb_0 must be exported, or connected to a matching conduit.
+Warning: pcihellocore.pcie_hard_ip_0: Interrupt sender pcie_hard_ip_0.cra_irq is not connected to an interrupt receiver
+Info: pcihellocore: Generating pcihellocore "pcihellocore" for QUARTUS_SYNTH
+Error: Generation stopped, 10 or more modules remaining
+Info: pcihellocore: Done "pcihellocore" with 9 modules, 1 files
+Error: ip-generate failed with exit code 1: 1 Error, 36 Warnings
+Info: Stopping: Create HDL design files for synthesis
